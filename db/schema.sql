@@ -14,7 +14,7 @@ CREATE TABLE category (
 --===========CREATE A TABLE TO HOLD THE PRODUCT==============--
 CREATE TABLE product (
     id INT NOT NULL AUTO_INCREMENT,
-    pro_name VARCHAR(50),
+    pro_name VARCHAR(50) NOT NULL,
     price DECIMAL(10,4) NOT NULL,
     stock INT NOT NULL DEFAULT ISNUMERIC(10),
     FOREIGN KEY(category_id) REFERENCES category(id) ON DELETE CASCADE,
