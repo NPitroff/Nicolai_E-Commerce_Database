@@ -5,13 +5,33 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
-  // find all products
+  try{
+    const productData = await Product.findAll(req.params, {
+      include: [{ models: Category, Product, through: ProductTag, Tag, through: ProductTag }]
+    });    
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err)
+  }
   // be sure to include its associated Category and Tag data
 });
 
 // get one product
 router.get('/:id', (req, res) => {
-  // find a single product by its `id`
+  try{
+    const productData = await Product.findByPk(req.params.id,{
+      include: [{ models: Category, Product, through: ProductTag, Tag, through: ProductTag }]
+    });
+    //============'IF' STATEMENT SHOULD 'ID' NOT BE FOUND========
+    if (!productData){
+      res.status(404).json({message: 'NO PRODUCT BY THAT ID IN INVENTORY' });
+      return
+    }
+    //================
+    res.status(200).json(productData);
+  } catch (err) {
+    req.status(500).json(err)
+  }
   // be sure to include its associated Category and Tag data
 });
 
