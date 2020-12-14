@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
     //============'IF' STATEMENT SHOULD 'ID' NOT BE FOUND========
     if (!productData){
       res.status(404).json({message: 'NO PRODUCT BY THAT ID IN INVENTORY' });
-      return
+      return;
     }
     //================
     res.status(200).json(productData);
