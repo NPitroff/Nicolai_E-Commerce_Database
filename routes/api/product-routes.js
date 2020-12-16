@@ -30,13 +30,14 @@ router.get("/", async (req, res) => {
 //================GET ONE PRODUCT========================//
 router.get("/:id", async (req, res) => {
   try {
-    const productData = await Product.findByPk(req.params.id, {
+    const productData = await Product.findAll({
+      where: {
+        id:req.params.id,
+      },
       include: [
-        {
-          models: Category,
-          Product,
-          through: ProductTag,
-          Tag,
+         Category,
+          {
+          model: Tag,
           through: ProductTag,
         },
       ],
@@ -68,6 +69,9 @@ router.post("/", (req, res) => {
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
+            product_name: product.name,
+            price: product.price,
+            stock: product.stock,
             product_id: product.id,
             tag_id,
           };
