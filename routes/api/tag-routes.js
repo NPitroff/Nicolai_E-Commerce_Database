@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
-// The `/api/tags` endpoint
 
-router.get('/', (req, res) => {
+
+//======================GET ALL TAGS=================//
+router.get('/', async(req, res) => {
   try{
     const tagData = await Tag.findAll(req.params, {
       include: [{models: Product, through: ProductTag}]
@@ -14,8 +15,8 @@ router.get('/', (req, res) => {
   }
   // be sure to include its associated Product data
 });
-
-router.get('/:id', (req, res) => {
+//============FIND A TAG BY ITS ID===============//
+router.get('/:id', async(req, res) => {
   try{
     const tagData = await Tag.findByPk(req.params.id, {
       include: [{models: Product, through: ProductTag}]
@@ -31,7 +32,7 @@ router.get('/:id', (req, res) => {
 }
 });
 
-//=======ADDED AN 'ASYNC' COMMAND===========//
+//=======CREATE A NEW TAG===========//
 router.post('/', async (req, res) => {
   try {
     const tagData = await Tag.create(req.body);
@@ -41,11 +42,12 @@ router.post('/', async (req, res) => {
   }
 });
 //=============UPDATE TAG DATA=======//
-router.update('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try{
     const tagData = await Tag.update({
       where: {
-        id:req.params.id
+        id:req.params.id,
+        tag_name: req.body.tag_name,
       }
     });
     if (!tagData) {

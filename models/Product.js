@@ -3,7 +3,7 @@ const { Model, DataTypes } = require("sequelize");
 const { Category } = require(".");
 // import our database connection from config.js
 const sequelize = require("../config/connection");
-const { FOREIGNKEYS } = require("sequelize/types/lib/query-types");
+// const { FOREIGNKEYS } = require("sequelize/types/lib/query-types");
 const models = require(".");
 
 // Initialize Product model (table) by extending off Sequelize's Model class
@@ -18,7 +18,7 @@ Product.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    pro_name: {
+    product_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -33,9 +33,11 @@ Product.init(
       validate: {
         isNumeric: true,
       },
-      references: {
-        models: Category,
-        key: id,
+      category_id: {
+        references: {
+          models: 'category',
+          key: "id",
+        },
       },
     },
   },
