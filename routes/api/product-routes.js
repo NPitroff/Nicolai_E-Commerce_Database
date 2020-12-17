@@ -58,12 +58,13 @@ router.get("/:id", async (req, res) => {
 router.post('/', (req, res) => {
   
   // let data = {
-  //     product_name: "Basketball",
-  //     price: 200.00,
-  //     stock: 3,
-  //     tagIds: [1, 2, 3, 4]
-  //   }
-  
+    //============================================================
+  //  {"product_name": "Grogu Doll",
+  //  "price": 200.00,
+  //  "stock": 3,
+  //  "tagIds": [15]
+  //  }
+  //================================================================
 //  console.log(req.body)
   Product.create(req.body)
     .then((product) => {
