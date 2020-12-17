@@ -34,13 +34,13 @@ router.get("/:id", async (req, res) => {
       // where: {
       //   id: req.params.id,
       // },
-      include: [
-        Category,
-        {
-          model: Tag,
-          through: ProductTag,
-        },
-      ],
+      // include: [
+      //   Category,
+      //   {
+      //     model: Tag,
+      //     through: ProductTag,
+      //   },
+      // ],
     
     });
     //============'IF' STATEMENT SHOULD 'ID' NOT BE FOUND========
