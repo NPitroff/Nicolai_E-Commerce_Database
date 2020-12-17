@@ -30,17 +30,18 @@ router.get("/", async (req, res) => {
 //================GET ONE PRODUCT========================//
 router.get("/:id", async (req, res) => {
   try {
-    const productData = await Product.findAll({
-      where: {
-        id:req.params.id,
-      },
+    const productData = await Product.findByPk(req.params.id, {
+      // where: {
+      //   id: req.params.id,
+      // },
       include: [
-         Category,
-          {
+        Category,
+        {
           model: Tag,
           through: ProductTag,
         },
       ],
+    
     });
     //============'IF' STATEMENT SHOULD 'ID' NOT BE FOUND========
     if (!productData) {
@@ -54,24 +55,22 @@ router.get("/:id", async (req, res) => {
 });
 
 //===============CREATE A NEW PRODUCT=============================//
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
+  
   // let data = {
   //     product_name: "Basketball",
   //     price: 200.00,
   //     stock: 3,
   //     tagIds: [1, 2, 3, 4]
   //   }
-
-  //  console.log(req.body)
+  
+//  console.log(req.body)
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
-            product_name: product.name,
-            price: product.price,
-            stock: product.stock,
             product_id: product.id,
             tag_id,
           };
@@ -89,7 +88,7 @@ router.post("/", (req, res) => {
 });
 
 //=============UPDATE PRODUCT DATA=================//
-router.put("/:id", (req, res) => {
+router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
